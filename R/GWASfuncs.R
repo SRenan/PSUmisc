@@ -15,6 +15,9 @@ library(data.table)
 #' @importFrom gtools mixedorder
 #' @export
 ggman <- function(chr, pos, pval, names = NULL, minpval = 1e-50, signif = 5e-8, lowp = 5e-3){
+  chr <- as.character(chr)
+  pos <- as.numeric(pos)
+
   nchr <- length(unique(chr))
   mantab <- data.table(chr, pos, pval)
   mantab[, posmin := min(pos), by = "chr"]
@@ -50,19 +53,31 @@ ggman <- function(chr, pos, pval, names = NULL, minpval = 1e-50, signif = 5e-8, 
 
 #' Draw QQ-plot
 #' @export
-ggqqp <- function(pval){
+ggqqp <- function(pval, alpha = 1e-2){
   # The pvalues are assumed to follow a chisq with 1df
   lout <- length(pval)
   obs <- sort(pval)
-  qobs <- qchisq(obs, df = 1, lower.tail = F)
+  sigobs <- obs[obs < alpha] 
+  nsig <- length(sigobs)
+  nunsig <- lout - nsig
+
+  idx <- c(1:5, nunsig:lout)
+
   exp <- seq(0, 1, length.out = lout)
-  qexp <- qchisq(exp, df = 1, lower.tail = F)
-  # TODO: Fix lambda printing multiple times
-  lambda <- round(median(obs)/qchisq(0.5,df=1), 3)
-  dt <- data.table(qobs, qexp)
-  p <- ggplot(dt, aes(x = qexp, y = qobs)) + geom_point() + geom_abline() +
-         geom_label(data = NULL, aes(label = paste("lambda ==", lambda), x = 0, y = 0), parse = T)
+  #qobs <- qchisq(obs, df = 1, lower.tail = F)
+  #qexp <- qchisq(exp, df = 1, lower.tail = F)
+
+  lambda <- round(qchisq(median(obs), df= 1, lower.tail = F)/qchisq(0.5, df=1, lower.tail = F), 3)
+  lambda_dt <- data.table(lambda)
+  dt <- data.table(obs, exp)
+  dt <- dt[order(exp, decreasing = T)]
+  p <- ggplot(dt[idx], aes(x = -log10(exp), y = -log10(obs))) + geom_point() + geom_abline() +
+         geom_label(data = lambda_dt, aes(label = paste("lambda ==", lambda), x = 0, y = 0), parse = T, hjust = 0, vjust = 0)
   p <- p + theme_bw()
   print(p)
   return(p)
 }
+
+
+
+
