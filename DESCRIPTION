@@ -1,8 +1,11 @@
 Package: PSUmisc
 Type: Package
-Version: 0.0.1
+Version: 0.0.2
 Author: Renan Sauteraud
 Maintainer: Renan Sauteraud <rxs575@psu.edu>
 License: GPL-2
 LazyData: TRUE
+Imports:
+  ggplot2
+  data.table
 RoxygenNote: 6.0.1
