@@ -8,7 +8,7 @@ library(data.table)
 #' @param pos Vector of genomic positions
 #' @param pval Vector of P-values from association test
 #'
-#' @importFrom ggplot2 ggplot theme theme_bw element_blank
+#' @importFrom ggplot2 ggplot aes theme theme_bw element_blank
 #' @importFrom ggplot2 geom_point geom_hline geom_rect
 #' @importFrom ggplot2 scale_fill_manual scale_colour_manual scale_x_continuous
 #' @importFrom ggplot2 xlab ylab
@@ -44,6 +44,25 @@ ggman <- function(chr, pos, pval, names = NULL, minpval = 1e-50, signif = 5e-8, 
     p <- p + geom_rect(data = chrtab, aes(xmin = posshift, xmax = posshift + posmax, ymin = 0, ymax = -log10(lowp), fill = chrcolor)) +
       sfm
   }
+  print(p)
+  return(p)
+}
+
+#' Draw QQ-plot
+#' @export
+ggqqp <- function(pval){
+  # The pvalues are assumed to follow a chisq with 1df
+  lout <- length(pval)
+  obs <- sort(pval)
+  qobs <- qchisq(obs, df = 1, lower.tail = F)
+  exp <- seq(0, 1, length.out = lout)
+  qexp <- qchisq(exp, df = 1, lower.tail = F)
+  # TODO: Fix lambda printing multiple times
+  lambda <- round(median(obs)/qchisq(0.5,df=1), 3)
+  dt <- data.table(qobs, qexp)
+  p <- ggplot(dt, aes(x = qexp, y = qobs)) + geom_point() + geom_abline() +
+         geom_label(data = NULL, aes(label = paste("lambda ==", lambda), x = 0, y = 0), parse = T)
+  p <- p + theme_bw()
   print(p)
   return(p)
 }
