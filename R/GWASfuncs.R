@@ -63,9 +63,10 @@ ggqqp <- function(pval, alpha = 1e-2){
 
   idx <- c(1:5, nunsig:lout)
 
-  exp <- seq(0, 1, length.out = lout)
-  #qobs <- qchisq(obs, df = 1, lower.tail = F)
-  #qexp <- qchisq(exp, df = 1, lower.tail = F)
+  # exp <- seq(0, 1, length.out = lout)
+  exp <- seq(1, lout)
+  exp <- (exp - 0.5) / lout
+
 
   lambda <- round(qchisq(median(obs), df= 1, lower.tail = F)/qchisq(0.5, df=1, lower.tail = F), 3)
   lambda_dt <- data.table(lambda)

@@ -21,10 +21,10 @@ find_nearest_pos <- function(pos, ref){
 enst2symbol <- function(enst = NULL){
   mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
   e2g <- data.table(getBM(attributes = c("hgnc_symbol", "ensembl_transcript_id"),
-                           filters = "ensembl_transcript_id", values = trs, mart = mart))
+                          mart = mart))
   setnames(e2g, c("GENE", "transcript"))
-  if(is.null(enst)){
-    e2g <- e2g[transcript %in% est]
+  if(!is.null(enst)){
+    e2g <- e2g[transcript %in% enst]
   }
   return(e2g)
 }
