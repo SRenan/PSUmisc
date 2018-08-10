@@ -9,6 +9,9 @@ readKali(bstrapdir)
 \arguments{
 \item{bstrapdir}{A \code{character}. The path of a kallisto bootstrap directory.}
 }
+\value{
+A \code{data.table}
+}
 \description{
 Process kallisto outputs
 }

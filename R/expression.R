@@ -2,6 +2,9 @@
 #'
 #' @param bstrapdir A \code{character}. The path of a kallisto bootstrap directory.
 #'
+#' @return
+#' A \code{data.table}
+#'
 #' @details
 #' This only reads the tsv files to get raw counts.
 #'
@@ -22,9 +25,7 @@ readKali <- function(bstrapdir){
     ablist[[i]] <- fread(abunds[i])
     ablist[[i]][, sample := samples[[i]]]
   }
-  ablist <- rbindlist(ablist)
-  tpms <- merge(ablist, map, by = "sample")
+  tpms <- rbindlist(ablist)
   tpms[, transcript := gsub("\\..*", "", target_id)]
-
   return(tpms)
 }

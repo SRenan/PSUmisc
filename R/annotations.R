@@ -16,7 +16,7 @@ find_nearest_pos <- function(pos, ref){
 #' @param enst A \code{character} vector. Unless NULL, the annotation will be
 #' subset for the trancripts specified.
 #'
-#' @importFrom biomaRt useMart
+#' @importFrom biomaRt useMart getBM
 #' @export
 enst2symbol <- function(enst = NULL){
   mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
