@@ -13,7 +13,7 @@ find_nearest_pos <- function(pos, ref){
 #' Use biomaRt to obtain an annotation data.table that maps from ensembl
 #' transcript to gene symbol.
 #'
-#' @param enst A \code{character} vector. Unless NULL, the annotation will be
+#' @param enst A \code{character} vector or NULL. The annotation will be
 #' subset for the trancripts specified.
 #'
 #' @importFrom biomaRt useMart getBM

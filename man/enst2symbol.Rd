@@ -7,7 +7,7 @@
 enst2symbol(enst = NULL)
 }
 \arguments{
-\item{enst}{A \code{character} vector. Unless NULL, the annotation will be
+\item{enst}{A \code{character} vector or NULL. The annotation will be
 subset for the trancripts specified.}
 }
 \description{

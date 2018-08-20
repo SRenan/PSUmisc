@@ -2,6 +2,7 @@
 
 export(enst2symbol)
 export(find_nearest_pos)
+export(freadl)
 export(ggman)
 export(ggqqp)
 export(readKali)

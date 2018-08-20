@@ -3,7 +3,7 @@
 #' @param bstrapdir A \code{character}. The path of a kallisto bootstrap directory.
 #'
 #' @return
-#' A \code{data.table}
+#' A \code{data.table} in long format.
 #'
 #' @details
 #' This only reads the tsv files to get raw counts.
