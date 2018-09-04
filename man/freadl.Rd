@@ -4,7 +4,15 @@
 \alias{freadl}
 \title{fread a list of files from}
 \usage{
-freadl(lf, zcat = F)
+freadl(lf, zcat = F, named = T)
+}
+\arguments{
+\item{lf}{A \code{character} vector of filenames.}
+
+\item{zcat}{A \code{logical}. Set to true if the files are zipped.}
+
+\item{named}{A \code{logical}. Set to true if the filenames should be added
+as a column.}
 }
 \description{
 fread a list of files from

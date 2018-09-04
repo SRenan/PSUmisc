@@ -4,17 +4,17 @@
 \alias{readKali}
 \title{Process kallisto outputs}
 \usage{
-readKali(bstrapdir)
+readKali(bstrapdir, quantilenorm = F)
 }
 \arguments{
 \item{bstrapdir}{A \code{character}. The path of a kallisto bootstrap directory.}
+
+\item{quantilenorm}{A \code{logical}. If set to TRUE, the data is quantile
+normalized to standardize expression across samples.}
 }
 \value{
 A \code{data.table} in long format.
 }
 \description{
 Process kallisto outputs
-}
-\details{
-This only reads the tsv files to get raw counts.
 }

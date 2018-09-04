@@ -52,6 +52,8 @@ ggman <- function(chr, pos, pval, names = NULL, minpval = 1e-50, signif = 5e-8, 
 }
 
 #' Draw QQ-plot
+#'
+#' @importFrom ggplot2 geom_abline
 #' @export
 ggqqp <- function(pval, alpha = 1e-2){
   # The pvalues are assumed to follow a chisq with 1df
@@ -126,14 +128,14 @@ topTableSNP <- function(table, pos, pval, group, locus_len = 1e6){
 }
 
 
-
-#' Find position from RSID
-#'
-#' @import SNPlocs.Hsapiens.dbSNP144.GRCh37
-#' @import TxDb.Hsapiens.UCSC.hg19.knownGene
-#' @importFrom BSgenome snpsById
-#' @importFrom GenomicFeatures genes
-#' @importFrom GenomeInfoDb keepStandardChromosomes seqlevelsStyle
+## TODO: This only works for genic SNP and makes the package longer to load
+## Find position from RSID
+##
+## @import SNPlocs.Hsapiens.dbSNP144.GRCh37
+## @import TxDb.Hsapiens.UCSC.hg19.knownGene
+## @importFrom BSgenome snpsById
+## @importFrom GenomicFeatures genes
+## @importFrom GenomeInfoDb keepStandardChromosomes seqlevelsStyle
 annotateSNP <- function(rsids){
   snps <- SNPlocs.Hsapiens.dbSNP144.GRCh37
   gp <- snpsById(snps, rsids, ifnotfound = "drop")
