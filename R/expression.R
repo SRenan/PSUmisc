@@ -35,7 +35,7 @@ readKali <- function(bstrapdir, quantilenorm = F){
 }
 
 
-#' @importFrom preprocessCore nromalize.quantiles
+#' @importFrom preprocessCore normalize.quantiles
 .quantnorm_kali_dt <- function(dt, v1, v2, valuevar){
   dc <- dcast(dt, get(v1) ~ get(v2), value.var=valuevar)
   mat <- as.matrix(dc[, 2:ncol(dc)])
