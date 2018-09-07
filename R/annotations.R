@@ -15,14 +15,19 @@ find_nearest_pos <- function(pos, ref){
 #'
 #' @param enst A \code{character} vector or NULL. The annotation will be
 #' subset for the trancripts specified.
+#' @param version A \code{logical}. If set to TRUE, return transcript version.
 #'
 #' @importFrom biomaRt useMart getBM
 #' @export
-enst2symbol <- function(enst = NULL){
+enst2symbol <- function(enst = NULL, version = F){
   mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
-  e2g <- data.table(getBM(attributes = c("hgnc_symbol", "ensembl_transcript_id"),
-                          mart = mart))
-  setnames(e2g, c("GENE", "transcript"))
+  if(version){
+    atts <- c("hgnc_symbol", "ensembl_transcript_id", "ensembl_transcript_id_version")
+  } else{
+    atts <- c("hgnc_symbol", "ensembl_transcript_id")
+  }
+  e2g <- data.table(getBM(attributes = atts, mart = mart))
+  setnames(e2g, c("hgnc_symbol", "ensembl_transcript_id"), c("GENE", "transcript"))
   if(!is.null(enst)){
     e2g <- e2g[transcript %in% enst]
   }

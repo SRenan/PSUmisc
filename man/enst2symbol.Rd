@@ -4,7 +4,7 @@
 \alias{enst2symbol}
 \title{Transcript to gene symbol}
 \usage{
-enst2symbol(enst = NULL)
+enst2symbol(enst = NULL, version = F)
 }
 \arguments{
 \item{enst}{A \code{character} vector or NULL. The annotation will be
