@@ -9,6 +9,8 @@ enst2symbol(enst = NULL, version = F)
 \arguments{
 \item{enst}{A \code{character} vector or NULL. The annotation will be
 subset for the trancripts specified.}
+
+\item{version}{A \code{logical}. If set to TRUE, return transcript version.}
 }
 \description{
 Use biomaRt to obtain an annotation data.table that maps from ensembl

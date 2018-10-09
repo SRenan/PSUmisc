@@ -23,3 +23,18 @@ keepLatestLog <- function(logdir){
   unlink(rmlog$file)
   return(keeplog)
 }
+
+#' @export
+checkQs <- function(args = "-u rxs575"){
+  qsusystem <- paste("qstat", args)
+  qsu <- system(qsusystem, intern = T)
+  ssqsu <- strsplit(qsu, split = " +")
+  ssqsu <- ssqsu[6:length(ssqsu)]
+  ssqsu <- ssqsu[seq(1, length(ssqsu), 2)]
+  res <- data.table(do.call("rbind", ssqsu[seq(1, length(ssqsu), 2)]))
+  setnames(res, c("job", "user", "queue", "jobname", "sessID", "nodes", "ppn", "pmem", "wallt", "status", "elapsed"))
+  jobcount <- res[, .N, by = "queue,status"][order(queue, status)]
+  setnames(jobcount, "N", "jobs")
+  print(jobcount)
+  return(invisible(res))
+}
