@@ -37,7 +37,7 @@ enst2symbol <- function(enst = NULL, version = F, kallisto = F){
     e2g <- e2g[transcript %in% enst]
   }
   if(kallisto){
-    e2g <- e2g[, c(ncol(e2g), 1)]
+    e2g <- e2g[, c(ncol(e2g), 1), with = F]
     setnames(e2g, c("target_id", "GENE"))
   }
   return(e2g)
