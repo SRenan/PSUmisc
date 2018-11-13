@@ -4,13 +4,17 @@
 \alias{enst2symbol}
 \title{Transcript to gene symbol}
 \usage{
-enst2symbol(enst = NULL, version = F)
+enst2symbol(enst = NULL, version = F, kallisto = F)
 }
 \arguments{
 \item{enst}{A \code{character} vector or NULL. The annotation will be
 subset for the trancripts specified.}
 
 \item{version}{A \code{logical}. If set to TRUE, return transcript version.}
+
+\item{kallisto}{A \code{logical}. If set to TRUE, return a table that
+can be used as target_mapping for \code{sleuth_prep} or tx2gene for
+\code{tximport}.}
 }
 \description{
 Use biomaRt to obtain an annotation data.table that maps from ensembl

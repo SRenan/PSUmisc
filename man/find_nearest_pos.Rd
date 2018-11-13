@@ -12,5 +12,5 @@ find_nearest_pos(pos, ref)
 \item{ref}{The \code{numeric} vector of postions to look into.}
 }
 \description{
-Find closest position in a reference
+For a list of positions, find the closest match in a given reference.
 }

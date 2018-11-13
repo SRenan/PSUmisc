@@ -2,11 +2,8 @@
 % Please edit documentation in R/annotations.R
 \name{pos2gene}
 \alias{pos2gene}
-\alias{pos2gene}
 \title{Find genes overlapping a position}
 \usage{
-pos2gene(target, interval)
-
 pos2gene(target, interval)
 }
 \arguments{
@@ -21,9 +18,6 @@ A \code{data.table} with all positions that were within the given
 }
 \description{
 Find genes overlapping a position
-}
-\details{
-This function is for the human genome only.
 }
 \note{
 When there are multiple matches in the \code{interval}, this function will

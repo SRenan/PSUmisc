@@ -7,7 +7,7 @@
 #'
 #' @return A \code{data.table}. Summary of the remaining logs.
 #'
-#' @importFrom tools file_path_sans_ext
+#' @importFrom tools file_path_sans_ext file_ext
 #' @export
 keepLatestLog <- function(logdir){
   logs <- list.files(logdir, full.names = T, include.dirs = F)
