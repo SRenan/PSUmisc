@@ -4,7 +4,7 @@
 \alias{keepLatestLog}
 \title{Keep only the latest log for each job}
 \usage{
-keepLatestLog(logdir)
+keepLatestLog(logdir = ".")
 }
 \arguments{
 \item{logdir}{A \code{character}. The directory with log files to cleanup.}

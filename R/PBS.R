@@ -9,7 +9,7 @@
 #'
 #' @importFrom tools file_path_sans_ext file_ext
 #' @export
-keepLatestLog <- function(logdir){
+keepLatestLog <- function(logdir = "."){
   logs <- list.files(logdir, full.names = T, include.dirs = F)
   logdt <- data.table(file = logs, job = file_path_sans_ext(basename(logs)))
   logdt[grep("\\.e", logs), type := "e"]

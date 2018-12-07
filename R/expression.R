@@ -47,3 +47,38 @@ readKali <- function(bstrapdir, quantilenorm = F){
   setnames(qnormdt, "rn", v1)
   return(qnormdt)
 }
+
+#' topTable to data.table
+#'
+#' Transform limma topTable output into a data.table object
+#'
+#' @param tt
+#'
+#' @return A \code{data.table} with the gene names as the first column
+#'
+#' @export
+tt2dt <- function(tt){
+  gns <- rownames(tt)
+  dt <- data.table(tt)
+  dt[, gene := gns][]
+  setcolorder(dt, c(ncol(dt), 1:(ncol(dt)-1)))
+  return(dt)
+}
+
+
+#' @export
+txi2de <- function(txi, pheno){
+  if(any(colnames(txi$counts) != rownames(pheno)))
+    stop("The column names of `txi` should match the rownames of `pheno`") 
+  design <- model.matrix(~gender, data = pheno) #Ensure ordering is identical (messes it up silently otherwise)
+  y <- DGEList(txi$counts)
+  keep <- filterByExpr(y, design = design)
+  y <- y[keep, ]
+  y <- calcNormFactors(y) #TMM normalization
+  v <- voom(y, design) #Transform counts into log2CPM
+  # Fit
+  fit <- lmFit(v, design = design)
+  eb <- eBayes(fit)
+  tt <- topTable(eb, coef="gendermale", number = Inf)
+  dt <- tt2dt(tt)
+}

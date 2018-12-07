@@ -53,7 +53,7 @@ ggman <- function(chr, pos, pval, names = NULL, minpval = 1e-50, signif = 5e-8, 
 
 #' Draw QQ-plot
 #'
-#' @importFrom ggplot2 geom_abline
+#' @importFrom ggplot2 geom_abline geom_label
 #' @export
 ggqqp <- function(pval, alpha = 1e-2){
   # The pvalues are assumed to follow a chisq with 1df
