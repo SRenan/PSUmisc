@@ -2,9 +2,9 @@
 % Please edit documentation in R/IO.R
 \name{freadl}
 \alias{freadl}
-\title{fread a list of files from}
+\title{fread file list}
 \usage{
-freadl(lf, zcat = F, named = T)
+freadl(lf, zcat = F, named = T, intersect = T)
 }
 \arguments{
 \item{lf}{A \code{character} vector of filenames.}
@@ -13,7 +13,13 @@ freadl(lf, zcat = F, named = T)
 
 \item{named}{A \code{logical}. Set to true if the filenames should be added
 as a column.}
+
+\item{intersect}{A \code{logical}. Set to true if some elements have
+different number of columns.}
+}
+\value{
+A \code{data.table}.
 }
 \description{
-fread a list of files from
+fread a list of files and rbind them
 }

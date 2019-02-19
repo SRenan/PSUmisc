@@ -148,3 +148,4 @@ GTEx_colors <- function(){
   coltab <- data.table(tissue = tissues, abbreviation = abbreviations, color = colors)
   return(coltab)
 }
+
