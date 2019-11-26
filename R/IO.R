@@ -15,11 +15,13 @@
 freadl <- function(lf, zcat = F, named = T, intersect = T){
   fl <- vector('list', length(lf))
   for(i in seq_along(lf)){
-    if(zcat)
+    if(zcat){
       fri <- paste0("zcat ", lf[i])
-    else
+      fl[[i]] <- fread(cmd = fri)
+    } else{
       fri <- lf[i]
-    fl[[i]] <- fread(cmd = fri)
+      fl[[i]] <- fread(input = fri)
+    }
     if(named)
       fl[[i]][, filename := lf[i]]
   }

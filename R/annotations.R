@@ -110,7 +110,7 @@ pos2gene <- function(target, interval){
 #' "Genetic effects on gene expression across human tissues",
 #' Nature volume 550, pages 204–213 (12 October 2017).
 #'
-#' @references Consortium G. (2017). Genetic effects on gene expression across human tissues. Nature 550 204–213. 10.1038/nature24277
+#' @references  Consortium G. (2017). Genetic effects on gene expression across human tissues. Nature 550 204–213. 10.1038/nature24277
 #'
 #' @return A \code{data.table} mapping tissue, abbreviated name and colour.
 #'
@@ -149,3 +149,38 @@ GTEx_colors <- function(){
   return(coltab)
 }
 
+
+#' Get a list of CpGs
+#'
+#' Get CpGs ranges from UCSC and matching genes.
+#'
+#' @importFrom GenomicRanges findOverlaps
+#' @importFrom AnnotationHub AnnotationHub
+#' @importFrom annotatr build_annotations
+#' @export
+get_cpg <- function(version = "hg38", chrx = TRUE){
+  annoc <- build_annotations(genome = version, annotations = "hg38_cpgs")
+  annog <- build_annotations(genome = version, annotations = "hg38_basicgenes")
+  if(chrx){
+    annoc <- annoc[seqnames(annoc) == "chrX",]
+    annog <- annog[seqnames(annog) == "chrX",]
+  }
+  # gene overlap
+  olap <- findOverlaps(annoc, annog, select = "first")
+  dtcpg <- data.table(as.data.frame(annoc))
+  dtgns <- data.table(as.data.frame(annog))
+  dtcpg[, gene := dtgns[olap, symbol]]
+  # limiting to promoters.
+  annop <- annog[annog$type == "hg38_genes_promoters",]
+  promolap <- findOverlaps(annoc, annop, select = "first")
+  dtcpg[, promo := dtgns[promolap, symbol]]
+  # limiting to exons
+  annoex <- annog[annog$type == "hg38_genes_exons",]
+  exolap <- findOverlaps(annoc, annoex, select = "first")
+  dtcpg[, exon := dtgns[exolap, symbol]]
+  # limiting to introns
+  annoin <- annog[annog$type == "hg38_genes_introns",]
+  introlap <- findOverlaps(annoc, annoin, select = "first")
+  dtcpg[, intron := dtgns[introlap, symbol]]
+  return(dtcpg)
+}
