@@ -150,37 +150,3 @@ GTEx_colors <- function(){
 }
 
 
-#' Get a list of CpGs
-#'
-#' Get CpGs ranges from UCSC and matching genes.
-#'
-#' @importFrom GenomicRanges findOverlaps
-#' @importFrom AnnotationHub AnnotationHub
-#' @importFrom annotatr build_annotations
-#' @export
-get_cpg <- function(version = "hg38", chrx = TRUE){
-  annoc <- build_annotations(genome = version, annotations = "hg38_cpgs")
-  annog <- build_annotations(genome = version, annotations = "hg38_basicgenes")
-  if(chrx){
-    annoc <- annoc[seqnames(annoc) == "chrX",]
-    annog <- annog[seqnames(annog) == "chrX",]
-  }
-  # gene overlap
-  olap <- findOverlaps(annoc, annog, select = "first")
-  dtcpg <- data.table(as.data.frame(annoc))
-  dtgns <- data.table(as.data.frame(annog))
-  dtcpg[, gene := dtgns[olap, symbol]]
-  # limiting to promoters.
-  annop <- annog[annog$type == "hg38_genes_promoters",]
-  promolap <- findOverlaps(annoc, annop, select = "first")
-  dtcpg[, promo := dtgns[promolap, symbol]]
-  # limiting to exons
-  annoex <- annog[annog$type == "hg38_genes_exons",]
-  exolap <- findOverlaps(annoc, annoex, select = "first")
-  dtcpg[, exon := dtgns[exolap, symbol]]
-  # limiting to introns
-  annoin <- annog[annog$type == "hg38_genes_introns",]
-  introlap <- findOverlaps(annoc, annoin, select = "first")
-  dtcpg[, intron := dtgns[introlap, symbol]]
-  return(dtcpg)
-}

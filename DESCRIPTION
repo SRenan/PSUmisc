@@ -1,6 +1,6 @@
 Package: PSUmisc
 Type: Package
-Version: 0.0.15
+Version: 0.0.16
 Author: Renan Sauteraud
 Maintainer: Renan Sauteraud <rxs575@psu.edu>
 License: GPL-2
@@ -11,5 +11,8 @@ Imports:
   data.table,
   preprocessCore,
   tools,
-  biomaRt
-RoxygenNote: 6.1.1
+  biomaRt,
+  GenomicRanges,
+  AnnotationHub,
+  annotatr
+RoxygenNote: 7.0.1

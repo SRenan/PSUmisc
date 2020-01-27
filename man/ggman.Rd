@@ -4,8 +4,15 @@
 \alias{ggman}
 \title{Draw manhattan plot}
 \usage{
-ggman(chr, pos, pval, names = NULL, minpval = 1e-50, signif = 5e-08,
-  lowp = 0.005)
+ggman(
+  chr,
+  pos,
+  pval,
+  names = NULL,
+  minpval = 1e-50,
+  signif = 5e-08,
+  lowp = 0.005
+)
 }
 \arguments{
 \item{chr}{Vector of chromosome names}
