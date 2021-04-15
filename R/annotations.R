@@ -45,7 +45,7 @@ enst2symbol <- function(enst = NULL, version = F, kallisto = F){
 
 
 #' @importFrom biomaRt useMart getBM
-ens_genes <- function(table, release = "hg19"){
+ens_genes <- function(table, release = "hg38"){
   release <- tolower(release)
   if(release %in% c("grch38", "hg38", "latest")){
     mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
