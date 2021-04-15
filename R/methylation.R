@@ -77,17 +77,25 @@ read_bm_summary <- function(summary){
 #'
 #' @param version A \code{character}. Must be 'hg38' for now.
 #' @param chr A \code{character}. The chromosome to extract CpGs for
+#' @param old_bioc A \code{logical}. This is needed on systems with Bioc 3.8,
+#' where `seqnames(x) %in%` does returns an error. If set to TRUE, \code{chr}
+#' must be of length 1.
 #'
 #' @importFrom GenomicRanges findOverlaps
 #' @importFrom AnnotationHub AnnotationHub
 #' @importFrom annotatr build_annotations
 #' @export
-get_cpg <- function(version = "hg38", chr = "chrX"){
+get_cpg <- function(version = "hg38", chr = "chrX", old_bioc = FALSE){
   annoc <- build_annotations(genome = version, annotations = "hg38_cpgs")
   annog <- build_annotations(genome = version, annotations = "hg38_basicgenes")
 
-  annoc <- annoc[seqnames(annoc) %in% chr,]
-  annog <- annog[seqnames(annog) %in% chr,]
+  if(old_bioc){ #TODO: rm this when all systems are >Bioc3.10
+    annoc <- annoc[seqnames(annoc) == chr,]
+    annog <- annog[seqnames(annog) == chr,]
+  } else{
+    annoc <- annoc[seqnames(annoc) %in% chr,]
+    annog <- annog[seqnames(annog) %in% chr,]
+  }
 
   # gene overlap
   olap <- findOverlaps(annoc, annog, select = "first", )
